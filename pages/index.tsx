@@ -1,29 +1,31 @@
-import {usePosts} from "../hooks/usePosts";
 import {getPosts} from "../lib/posts";
-import {NextPage} from "next";
+import {GetServerSidePropsContext, NextPage} from "next";
+import uaParser from 'ua-parser-js'
 
 type Props = {
-    posts: Post[]
+    browser: {
+        name:string;
+        version:string;
+        major:string;
+    }
 }
 const Home: NextPage<Props> = (props) => {
-    const {posts} = props
+    const {browser} = props
     return (
         <div>
             <h1>
-                文章列表
+                当前浏览器是：{browser.name}
             </h1>
-            {
-                posts.map(post => <div key={post.id}>{post.id}</div>)
-            }
         </div>
     )
 }
 export default Home;
-export const getStaticProps = async () => {
-    const posts = await getPosts()
-    return {
-        props: {
-            posts: JSON.parse(JSON.stringify(posts))
+export const getServerSideProps = (context:GetServerSidePropsContext)=>{
+    const ua = context.req.headers['user-agent']
+    const browser = new uaParser(ua).getBrowser()
+    return{
+        props:{
+            browser
         }
     }
 }
