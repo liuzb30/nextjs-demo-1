@@ -24,6 +24,7 @@ export const getPostIds = async () => {
 
 export const getPost = (id: string) => {
     const fulPath = path.join(markdownDir, id + '.md')
+    let post={}
     try {
         const text = fs.readFileSync(fulPath, {encoding: 'utf-8'})
         const {
@@ -31,9 +32,8 @@ export const getPost = (id: string) => {
             content
         } = matter(text)
         const htmlContent = marked(content)
-        return {id, title, date, content, htmlContent}
-    } catch (e) {
-        return {}
-    }
+        post= {id, title, date, content, htmlContent}
+    } catch (e) {}
+    return post;
 
 }
