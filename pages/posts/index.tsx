@@ -1,5 +1,6 @@
 import {NextPage} from "next";
 import {getPosts} from "../../lib/posts";
+import Link from "next/link";
 
 type Props = {
     posts: Post[]
@@ -12,7 +13,7 @@ const PostsIndex: NextPage<Props> = (props) => {
                 文章列表
             </h1>
             {
-                posts.map(post => <div key={post.id}>{post.id}</div>)
+                posts.map(post => <div key={post.id}><Link href={`/posts/${post.id}`}><a>{post.id}</a></Link> </div>)
             }
         </div>
     )
