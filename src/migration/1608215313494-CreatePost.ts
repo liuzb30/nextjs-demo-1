@@ -4,7 +4,7 @@ export class CreatePost1608215313494 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         // 升级数据库
-        queryRunner.createTable(new Table({
+        await queryRunner.createTable(new Table({
             name:'posts',
             columns:[
                 {
