@@ -4,9 +4,14 @@ import {Post} from "./entity/Post";
 
 createConnection().then(async connection => {
 
-    console.log("Inserting a new user into the database...");
     const posts = await connection.manager.find(Post)
-    console.log(posts)
+    if (posts.length === 0) {
+        await connection.manager.save([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(n =>
+                new Post({title: `Post ${n}`, content: `我的第${n}篇文章`})
+            )
+        )
+    }
+    console.log("ok");
 
     await connection.close()
 
