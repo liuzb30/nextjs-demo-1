@@ -35,3 +35,9 @@ yarn-error.log*
 
 # ide
 .idea/
+
+# orm
+ormconfig.json
+
+# dist
+dist
