@@ -18,9 +18,9 @@ export class Post {
     title: string;
     @Column('text')
     content: string;
-    @CreateDateColumn('timestamp')
+    @CreateDateColumn()
     createdAt: Date;
-    @UpdateDateColumn('timestamp')
+    @UpdateDateColumn()
     updatedAt: Date;
     @ManyToOne(type => User, user => user.posts)
     author: User;

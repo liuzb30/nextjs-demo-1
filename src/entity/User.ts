@@ -10,9 +10,9 @@ export class User {
     username: string;
     @Column('varchar')
     passwordDigest: string;
-    @CreateDateColumn('timestamp')
+    @CreateDateColumn()
     createdAt: Date;
-    @UpdateDateColumn('timestamp')
+    @UpdateDateColumn()
     updatedAt: Date;
     @OneToMany(type => Post, post => post.author)
     posts: Post[];
