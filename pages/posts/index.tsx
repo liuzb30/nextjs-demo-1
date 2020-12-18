@@ -1,6 +1,7 @@
 import {NextPage} from "next";
-import {getPosts} from "../../lib/posts";
 import Link from "next/link";
+import {Post} from "../../src/entity/Post";
+import {getDatabaseConnection} from "../../lib/connection";
 
 type Props = {
     posts: Post[]
@@ -13,14 +14,15 @@ const PostsIndex: NextPage<Props> = (props) => {
                 文章列表
             </h1>
             {
-                posts.map(post => <div key={post.id}><Link href={`/posts/${post.id}`}><a>{post.id}</a></Link> </div>)
+                posts.map(post => <div key={post.id}><Link href={`/posts/${post.id}`}><a>{post.title}</a></Link> </div>)
             }
         </div>
     )
 }
 export default PostsIndex;
 export const getStaticProps = async () => {
-    const posts = await getPosts()
+    const connection  = await getDatabaseConnection()
+    const posts = await connection.manager.find(Post)
     return {
         props: {
             posts: JSON.parse(JSON.stringify(posts))
