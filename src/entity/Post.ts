@@ -1,15 +1,33 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {
+    Column,
+    CreateDateColumn,
+    Entity,
+    ManyToOne,
+    OneToMany,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn
+} from "typeorm";
+import {User} from "./User";
+import {Comment} from "./Comment";
 
 @Entity('posts')
 export class Post {
     @PrimaryGeneratedColumn()
     id: number;
     @Column('varchar')
-    title:string;
+    title: string;
     @Column('text')
-    content:string;
+    content: string;
+    @CreateDateColumn('timestamp')
+    createdAt: Date;
+    @UpdateDateColumn('timestamp')
+    updatedAt: Date;
+    @ManyToOne(type => User, user => user.posts)
+    author: User;
+    @OneToMany(type => Comment, comment => comment.post)
+    comments: Comment[];
 
     constructor(attributes: Partial<Post>) {
-        Object.assign(this,attributes)
+        Object.assign(this, attributes)
     }
 }
