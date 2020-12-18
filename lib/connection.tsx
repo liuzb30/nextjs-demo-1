@@ -11,7 +11,6 @@ export const getDatabaseConnection = async () => {
     if(connection.has('default')){
         await connection.get('default').close()
     }
-
     // @ts-ignore
     return await createConnection({
         ...config,
