@@ -7,21 +7,10 @@ export class CreatePost1608215313494 implements MigrationInterface {
         await queryRunner.createTable(new Table({
             name:'posts',
             columns:[
-                {
-                    name:'id',
-                    type:'int',
-                    isPrimary:true,
-                    isGenerated:true,
-                    generationStrategy:'increment'
-                },
-                {
-                    name:'title',
-                    type:'varchar'
-                },
-                {
-                    name:'content',
-                    type:'text'
-                }
+                {name:'id', type:'int', isPrimary:true, isGenerated:true, generationStrategy:'increment'},
+                {name:'title', type:'varchar'},
+                {name:'content',type:'text'},
+                {name:'author_id', type:'int'}
             ]
         }))
     }
