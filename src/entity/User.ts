@@ -1,6 +1,15 @@
-import {Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
+import {
+    BeforeInsert,
+    Column,
+    CreateDateColumn,
+    Entity,
+    OneToMany,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn
+} from "typeorm";
 import {Post} from "./Post";
 import {Comment} from "./Comment";
+import _ from 'lodash'
 
 @Entity('users')
 export class User {
@@ -18,4 +27,8 @@ export class User {
     posts: Post[];
     @OneToMany(type => Comment, comment => comment.user)
     comments: Comment[];
+
+    toJSON(){
+        return _.omit(this,['passwordDigest'])
+    }
 }
