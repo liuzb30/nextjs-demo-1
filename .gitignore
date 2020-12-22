@@ -41,3 +41,6 @@ ormconfig.json
 
 # dist
 dist
+
+# env
+/.env.local

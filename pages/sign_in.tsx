@@ -1,4 +1,4 @@
-import {GetServerSideProps, NextPage} from "next";
+import {GetServerSideProps, GetServerSidePropsContext, NextPage} from "next";
 import {useCallback, useState} from "react";
 import axios from "axios";
 import {withSession} from "../lib/withSession";
@@ -60,10 +60,10 @@ const SignIn: NextPage<Props> = (props) => {
 
 export default SignIn
 
-// @ts-ignore
-export const getServerSideProps:GetServerSideProps = withSession(async context => {
+export const getServerSideProps:GetServerSideProps = withSession(async (context:GetServerSidePropsContext) => {
     // @ts-ignore
-    const user = context.req.session.get('currentUser')
+    const user = context.req.session.get('currentUser') || null
+    console.log(user)
     return{
         props:{
             user: JSON.parse(JSON.stringify(user))
