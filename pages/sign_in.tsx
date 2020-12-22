@@ -1,24 +1,23 @@
-import axios from "axios";
 import {NextPage} from "next";
 import {useCallback, useState} from "react";
+import axios from "axios";
 
-const SignUp: NextPage = () => {
+const SignIn: NextPage = () => {
+
     const [formData, setFormData] = useState({
         username: '',
-        password: '',
-        passwordConfirm: ''
+        password: ''
     })
     const initErrors = {
         username:[] as string[],
-        password:[] as string[],
-        passwordConfirm:[] as string[]
+        password:[] as string[]
     }
     const [errors, setErrors] = useState(initErrors)
     const onSubmit = useCallback((e) => {
         e.preventDefault();
         setErrors(initErrors)
-        axios.post('/api/v1/users',formData).then(res=>{
-            window.alert('注册成功')
+        axios.post('/api/v1/session',formData).then(res=>{
+            window.alert('登录成功')
         }).catch(e=>{
             if(e.response.status===401){
                 setErrors(e.response.data)
@@ -38,14 +37,8 @@ const SignUp: NextPage = () => {
                     <input type='password' value={formData.password} onChange={e => setFormData({...formData, password: e.target.value})}/>
                 </label>
                 <p>{errors.password.join(',')}</p>
-
-                <label>
-                    确认密码
-                    <input type='password' value={formData.passwordConfirm} onChange={e => setFormData({...formData, passwordConfirm: e.target.value})}/>
-                </label>
-                <p>{errors.passwordConfirm.join(',')}</p>
                 <div>
-                    <button type='submit'>注册</button>
+                    <button type='submit'>登录</button>
                 </div>
             </form>
             <style jsx>{`
@@ -57,4 +50,4 @@ const SignUp: NextPage = () => {
     )
 }
 
-export default SignUp
+export default SignIn
