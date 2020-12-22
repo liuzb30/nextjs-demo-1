@@ -1,11 +1,9 @@
 import {NextApiHandler} from "next";
 import {User} from "../../../src/entity/User";
-import md5 from "md5";
 import {getDatabaseConnection} from "../../../lib/connection";
 import {SignUp} from "../../../src/Model/SignUp";
 
 const Users: NextApiHandler = async (req, res) => {
-    console.log(req.body)
     const {username, password, passwordConfirm} = req.body
     // 信息校验
     const errors = {
@@ -23,9 +21,7 @@ const Users: NextApiHandler = async (req, res) => {
         res.statusCode = 401
         res.end(JSON.stringify(signUp.errors))
     } else {
-        const user = new User()
-        user.username = username
-        user.passwordDigest = md5(password)
+        const user = new User({username,password})
         const connection = await getDatabaseConnection()
         await connection.manager.save(user)
         res.statusCode = 200;
