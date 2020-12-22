@@ -1,8 +1,6 @@
 import {NextApiHandler} from "next";
-import {getDatabaseConnection} from "../../../lib/connection";
-import {User} from "../../../src/entity/User";
-import md5 from "md5";
 import {SignIn} from "../../../src/Model/SignIn";
+import {withSession} from "../../../lib/withSession";
 
 const Session:NextApiHandler = async (req,res)=>{
     const {username, password} = req.body
@@ -15,9 +13,11 @@ const Session:NextApiHandler = async (req,res)=>{
         res.end(JSON.stringify(signIn.errors));
     }else{
         res.statusCode=200
+        req.session.set('currentUser', signIn.user)
+        await req.session.save()
         res.end(JSON.stringify(signIn.user))
     }
 
 }
 
-export default Session
+export default withSession(Session)
