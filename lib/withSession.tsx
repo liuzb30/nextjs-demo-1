@@ -5,6 +5,8 @@ export function withSession(handler:NextApiHandler|GetServerSideProps){
     return withIronSession(handler,{
         password: process.env.SECRET,
         cookieName: "blog",
-        cookieOptions: {},
+        cookieOptions: {
+            secure:false
+        },
     })
 }
