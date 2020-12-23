@@ -3,6 +3,7 @@ import Link from "next/link";
 import {Post} from "../../src/entity/Post";
 import {getDatabaseConnection} from "../../lib/connection";
 import * as querystring from "querystring";
+import {usePager} from "../../hooks/usePager";
 
 type Props = {
     posts: Post[];
@@ -11,6 +12,7 @@ type Props = {
 }
 const PostsIndex: NextPage<Props> = (props) => {
     const {posts, page, totalPage} = props
+    const {pager} = usePager({page,totalPage})
     return (
         <div>
             <h1>
@@ -19,9 +21,7 @@ const PostsIndex: NextPage<Props> = (props) => {
             {
                 posts.map(post => <div key={post.id}><Link href={`/posts/${post.id}`}><a>{post.title}</a></Link></div>)
             }
-            {page > 1 && <Link href={`/?page=${page - 1}`}><a>上一页</a></Link>}
-            {page > 1 && page < totalPage && ' | '}
-            {page < totalPage && <Link href={`/?page=${page + 1}`}><a>下一页</a></Link>}
+            {pager}
         </div>
     )
 }
