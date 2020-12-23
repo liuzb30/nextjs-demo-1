@@ -1,4 +1,4 @@
-import {NextPage} from "next";
+import {GetServerSideProps, NextPage} from "next";
 import Link from "next/link";
 import {Post} from "../../src/entity/Post";
 import {getDatabaseConnection} from "../../lib/connection";
@@ -20,7 +20,7 @@ const PostsIndex: NextPage<Props> = (props) => {
     )
 }
 export default PostsIndex;
-export const getStaticProps = async () => {
+export const getServerSideProps:GetServerSideProps = async () => {
     const connection  = await getDatabaseConnection()
     const posts = await connection.manager.find(Post)
     return {
