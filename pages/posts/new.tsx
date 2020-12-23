@@ -18,8 +18,17 @@ const PostsNew: NextPage = () => {
         }
     )
     return (
-        <div>
-            {form}
+        <div className="postsNew">
+            <div className="form-wrapper">{form}</div>
+            <style jsx global>{`
+            .form-wrapper {
+              padding: 16px;
+            }
+            .postsNew .field-content textarea {
+              height: 20em;
+              resize: none;
+            }
+            `}</style>
         </div>
     )
 }
