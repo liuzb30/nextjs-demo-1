@@ -9,7 +9,7 @@ const Session:NextApiHandler = async (req,res)=>{
     const hasError = signIn.hasError()
     res.setHeader("Content-Type", "application/json");
     if(hasError){
-        res.statusCode = 401;
+        res.statusCode = 422;
         res.end(JSON.stringify(signIn.errors));
     }else{
         res.statusCode=200

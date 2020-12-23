@@ -10,9 +10,9 @@ type useFormOptions<T> = {
     initFormData: T;
     fields: Field<T>[];
     buttons: ReactChild;
-    submit:{
-        request: (formData:T)=>Promise<AxiosResponse<T>>;
-        message:string;
+    submit: {
+        request: (formData: T) => Promise<AxiosResponse<T>>;
+        callback?: () => void;
     }
 }
 
@@ -30,11 +30,15 @@ export function useForm<T>(props: useFormOptions<T>) {
     })
     const _onSubmit = useCallback((e) => {
         e.preventDefault();
-        submit.request(formData).then(res=>{
-                window.alert(submit.message)
+        submit.request(formData).then(res => {
+            submit.callback && submit.callback()
         }).catch(e => {
-            if (e.response.status === 401) {
+            if (e.response.status === 422) {
                 setErrors(e.response.data)
+            } else if (e.response.status === 401) {
+                console.log(window.location.pathname)
+                window.alert(e.response.data)
+                window.location.href = `/sign_in?redirect=${window.location.pathname}`
             }
         })
     }, [formData])
@@ -69,5 +73,5 @@ export function useForm<T>(props: useFormOptions<T>) {
               }
             `}</style>
     </div>)
-    return {form,formData,setErrors}
+    return {form, formData, setErrors}
 }

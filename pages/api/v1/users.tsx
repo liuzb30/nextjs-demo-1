@@ -18,7 +18,7 @@ const Users: NextApiHandler = async (req, res) => {
 
     res.setHeader("Content-Type", "application/json");
     if (hasError) {
-        res.statusCode = 401
+        res.statusCode = 422
         res.end(JSON.stringify(signUp.errors))
     } else {
         const user = new User({username,password})

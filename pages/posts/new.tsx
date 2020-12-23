@@ -6,14 +6,14 @@ const PostsNew: NextPage = () => {
     const initFormData = {title: '', content: ''}
     const {form} = useForm({
             initFormData,
-            fields:[
+            fields: [
                 {label: '标题', type: 'text', key: 'title',},
                 {label: '内容', type: 'textarea', key: 'content',},
             ],
             buttons: (<button type='submit'>提交</button>),
-            submit:{
-                request:formData => axios.post('/api/v1/posts', formData),
-                message:'提交成功'
+            submit: {
+                request: formData => axios.post('/api/v1/posts', formData),
+                callback: () => window.alert('提交成功')
             }
         }
     )
