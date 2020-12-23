@@ -1,6 +1,7 @@
 import axios from "axios";
 import {NextPage} from "next";
-import {useCallback, useState} from "react";
+import {ChangeEventHandler, useCallback, useState} from "react";
+import Form from "../components/Form";
 
 const SignUp: NextPage = () => {
     const [formData, setFormData] = useState({
@@ -14,6 +15,7 @@ const SignUp: NextPage = () => {
         passwordConfirm:[] as string[]
     }
     const [errors, setErrors] = useState(initErrors)
+
     const onSubmit = useCallback((e) => {
         e.preventDefault();
         setErrors(initErrors)
@@ -27,32 +29,14 @@ const SignUp: NextPage = () => {
     }, [formData])
     return (
         <div>
-            <form onSubmit={onSubmit}>
-                <label>
-                    用户名
-                    <input value={formData.username} onChange={e => setFormData({...formData, username: e.target.value})}/>
-                </label>
-                <p>{errors.username.join(',')}</p>
-                <label>
-                    密码
-                    <input type='password' value={formData.password} onChange={e => setFormData({...formData, password: e.target.value})}/>
-                </label>
-                <p>{errors.password.join(',')}</p>
-
-                <label>
-                    确认密码
-                    <input type='password' value={formData.passwordConfirm} onChange={e => setFormData({...formData, passwordConfirm: e.target.value})}/>
-                </label>
-                <p>{errors.passwordConfirm.join(',')}</p>
-                <div>
-                    <button type='submit'>注册</button>
-                </div>
-            </form>
-            <style jsx>{`
-              label{
-                display: block;
-              }
-            `}</style>
+            <Form onSubmit={onSubmit} fields={[
+                {label:'用户名',type:'text',value:formData.username,
+                    onChange:e => setFormData({...formData, username: e.target.value}),errors:errors.username},
+                {label:'密码',type:'password',value:formData.password,
+                    onChange:e => setFormData({...formData, password: e.target.value}),errors:errors.password},
+                {label:'确认密码',type:'password',value:formData.passwordConfirm,
+                    onChange:e => setFormData({...formData, passwordConfirm: e.target.value}),errors:errors.passwordConfirm},
+            ]} buttons={<button type='submit'>注册</button>}/>
         </div>
     )
 }
