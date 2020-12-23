@@ -8,7 +8,7 @@ const Home: NextPage = () => {
                 <img src='/logo.png'/>
                 <h1>刘圳槟的个人博客</h1>
                 <p>我是一个爱学习的人</p>
-                <p><Link href='/post'><a>文章列表</a></Link></p>
+                <p><Link href='/posts'><a>文章列表</a></Link></p>
             </div>
             <style jsx>{`
               .cover{

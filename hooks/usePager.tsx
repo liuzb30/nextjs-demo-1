@@ -31,17 +31,26 @@ export const usePager = (props: Props) => {
     const pager = (
         <div className='pager'>
             {page > 1 && <Link href={`/?page=${page - 1}`}><a>上一页</a></Link>}
-            {pages.map((p,index) => p===-1 ? <span key={index}>...</span> : <Link href={`/?page=${p}`} key={index}><a>{p}</a></Link>)}
+            {pages.map((p, index) => p === -1 ? <span key={index}>...</span> :
+                <Link href={`/?page=${p}`} key={index}><a>{p}</a></Link>)}
             {page < totalPage && <Link href={`/?page=${page + 1}`}><a>下一页</a></Link>}
             <style jsx>{`
-              .pager{
-                padding-top: 20px;
-                & >*{
-                  margin-right: 10px;
-                  padding: 8px;
-                  border: 1px solid #eee;
-                }
-              } 
+              .pager {
+                margin-top: 10px;
+                padding: 10px 0;
+              }
+              .pager span,
+              .pager a {
+                margin-right: 10px;
+              }
+              .pager a {
+                padding: 8px;
+                border: 1px solid #eee;
+                color: #222;
+              }
+              .pager a.active {
+                color: blue;
+              }
             `}</style>
         </div>
     )
