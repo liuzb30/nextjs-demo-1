@@ -36,12 +36,12 @@ export const usePager = (props: Props) => {
             <style jsx>{`
               .pager{
                 padding-top: 20px;
-              }
-              .pager >*{
+                & >*{
                   margin-right: 10px;
                   padding: 8px;
                   border: 1px solid #eee;
-              }
+                }
+              } 
             `}</style>
         </div>
     )
